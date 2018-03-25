@@ -2,6 +2,9 @@ package ca.ubc.cs.cpsc210.translink.ui;
 
 import android.content.Context;
 import ca.ubc.cs.cpsc210.translink.BusesAreUs;
+import ca.ubc.cs.cpsc210.translink.model.Route;
+import ca.ubc.cs.cpsc210.translink.model.Stop;
+import ca.ubc.cs.cpsc210.translink.model.StopManager;
 import org.osmdroid.DefaultResourceProxyImpl;
 import org.osmdroid.ResourceProxy;
 import org.osmdroid.bonuspack.overlays.Polyline;
@@ -38,6 +41,18 @@ public class BusRouteDrawer extends MapViewOverlay {
      * Plot each visible segment of each route pattern of each route going through the selected stop.
      */
     public void plotRoutes(int zoomLevel) {
+       // getLineWidth(zoomLevel) "HELPER METHOD!"
+        Stop s = StopManager.getInstance().getSelected();
+
+        busRouteLegendOverlay = createBusRouteLegendOverlay();
+        for (Polyline p : busRouteOverlays) {
+            p.setWidth(getLineWidth(zoomLevel));
+            for (Route r : s.getRoutes()) {
+                r.getPattern(s.getName());
+                p.setVisible(true);
+            }
+        }
+
         //TODO: complete the implementation of this method (Task 7)
     }
 
