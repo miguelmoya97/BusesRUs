@@ -62,13 +62,12 @@ public class BusStopPlotter extends MapViewOverlay {
      */
     public void markStops(Location currentLocation) {
         Drawable stopIconDrawable = activity.getResources().getDrawable(R.drawable.stop_icon);
-        clearMarkers();
+        newStopClusterer();
         updateVisibleArea();
         for (Stop s : StopManager.getInstance()) {
             if (Geometry.rectangleContainsPoint(northWest, southEast, s.getLocn())) {
                 Marker marker = new Marker(mapView);
                 GeoPoint markerPos = Geometry.gpFromLatLon(s.getLocn());
-
                 marker.setIcon(stopIconDrawable);
                 marker.setTitle(titleGenerator(s));
                 marker.setPosition(markerPos);
@@ -79,10 +78,6 @@ public class BusStopPlotter extends MapViewOverlay {
             }
 
         }
-
-
-
-
 
         // TODO: complete the implementation of this method (Task 5)
     }
@@ -125,6 +120,13 @@ public class BusStopPlotter extends MapViewOverlay {
     public void updateMarkerOfNearest(Stop nearest) {
         Drawable stopIconDrawable = activity.getResources().getDrawable(R.drawable.stop_icon);
         Drawable closestStopIconDrawable = activity.getResources().getDrawable(R.drawable.closest_stop_icon);
+        setMarker(nearest, nearestStnMarker);
+        if (getMarker(nearest) == null) {
+            getMarker(nearest).setIcon(stopIconDrawable);
+
+        } else {
+            getMarker(nearest).setIcon(closestStopIconDrawable);
+        }
 
 
         // TODO: complete the implementation of this method (Task 6)
