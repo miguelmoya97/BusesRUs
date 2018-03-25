@@ -5,9 +5,13 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
+import android.util.Log;
 import ca.ubc.cs.cpsc210.translink.BusesAreUs;
 import ca.ubc.cs.cpsc210.translink.R;
 import ca.ubc.cs.cpsc210.translink.model.Stop;
+import ca.ubc.cs.cpsc210.translink.model.StopManager;
+import ca.ubc.cs.cpsc210.translink.util.Geometry;
+import ca.ubc.cs.cpsc210.translink.util.LatLon;
 import org.osmdroid.bonuspack.clustering.RadiusMarkerClusterer;
 import org.osmdroid.bonuspack.overlays.Marker;
 import org.osmdroid.views.MapView;
@@ -32,6 +36,7 @@ public class BusStopPlotter extends MapViewOverlay {
     private Activity activity;
     private StopInfoWindow stopInfoWindow;
 
+
     /**
      * Constructor
      *
@@ -55,6 +60,22 @@ public class BusStopPlotter extends MapViewOverlay {
      */
     public void markStops(Location currentLocation) {
         Drawable stopIconDrawable = activity.getResources().getDrawable(R.drawable.stop_icon);
+        for (Stop s : StopManager.getInstance()) {
+            updateVisibleArea();
+            if (Geometry.rectangleContainsPoint(northWest, southEast, s.getLocn())) {
+                Marker marker = new Marker(mapView);
+                marker.setImage(stopIconDrawable);
+                marker.setIcon(stopIconDrawable);
+                setMarker(s, marker);
+                marker.setRelatedObject(s);
+                stopClusterer.add(marker);
+            }
+
+        }
+
+
+
+
 
         // TODO: complete the implementation of this method (Task 5)
     }
@@ -86,6 +107,7 @@ public class BusStopPlotter extends MapViewOverlay {
     public void updateMarkerOfNearest(Stop nearest) {
         Drawable stopIconDrawable = activity.getResources().getDrawable(R.drawable.stop_icon);
         Drawable closestStopIconDrawable = activity.getResources().getDrawable(R.drawable.closest_stop_icon);
+
 
         // TODO: complete the implementation of this method (Task 6)
     }
