@@ -23,7 +23,6 @@ import ca.ubc.cs.cpsc210.translink.parsers.exception.ArrivalsDataMissingExceptio
 import ca.ubc.cs.cpsc210.translink.providers.DataProvider;
 import ca.ubc.cs.cpsc210.translink.providers.HttpArrivalDataProvider;
 import ca.ubc.cs.cpsc210.translink.providers.HttpBusLocationDataProvider;
-import ca.ubc.cs.cpsc210.translink.ui.BusStopPlotter;
 import ca.ubc.cs.cpsc210.translink.ui.LocationListener;
 import ca.ubc.cs.cpsc210.translink.ui.MapDisplayFragment;
 import ca.ubc.cs.cpsc210.translink.ui.StopSelectionListener;
@@ -110,7 +109,12 @@ public class BusesAreUs extends Activity implements LocationListener, StopSelect
      */
     @Override
     public void onLocationChanged(Stop nearest, LatLon locn) {
-        nearestStopLabel.setText(nearest.getName());
+        if (nearest == null) {
+            nearestStopLabel.setText(R.string.out_of_range);
+        } else {
+            myNearestStop = nearest;
+            nearestStopLabel.setText(myNearestStop.getName());
+        }
         // TODO: Complete the implementation of this method (Task 6)
     }
 

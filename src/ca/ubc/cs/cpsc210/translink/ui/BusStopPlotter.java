@@ -82,6 +82,7 @@ public class BusStopPlotter extends MapViewOverlay {
         // TODO: complete the implementation of this method (Task 5)
     }
 
+    //helper for markStops
     private String titleGenerator(Stop stop) {
         StringBuilder sb = new StringBuilder();
         String title = stop.getNumber() + " " + stop.getName();
@@ -120,12 +121,18 @@ public class BusStopPlotter extends MapViewOverlay {
     public void updateMarkerOfNearest(Stop nearest) {
         Drawable stopIconDrawable = activity.getResources().getDrawable(R.drawable.stop_icon);
         Drawable closestStopIconDrawable = activity.getResources().getDrawable(R.drawable.closest_stop_icon);
-        setMarker(nearest, nearestStnMarker);
-        if (getMarker(nearest) == null) {
-            getMarker(nearest).setIcon(stopIconDrawable);
 
-        } else {
-            getMarker(nearest).setIcon(closestStopIconDrawable);
+
+        for (Marker m1 : stopClusterer.getItems()) {
+            m1.setIcon(stopIconDrawable);
+            if (nearest != null) {
+                GeoPoint gp = Geometry.gpFromLatLon(nearest.getLocn());
+                for (Marker m : stopClusterer.getItems()) {
+                    if (m.getPosition().equals(gp)) {
+                        m.setIcon(closestStopIconDrawable);
+                    }
+                }
+            }
         }
 
 

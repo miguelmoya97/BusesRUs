@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import ca.ubc.cs.cpsc210.translink.BusesAreUs;
 import ca.ubc.cs.cpsc210.translink.R;
+import ca.ubc.cs.cpsc210.translink.model.Stop;
 import ca.ubc.cs.cpsc210.translink.model.StopManager;
 import ca.ubc.cs.cpsc210.translink.parsers.RouteMapParser;
 import ca.ubc.cs.cpsc210.translink.parsers.StopParser;
@@ -298,9 +299,11 @@ public class MapDisplayFragment extends Fragment implements MapEventsReceiver, I
      */
     private void handleLocationChange(Location location) {
         LatLon coordinates = new LatLon(location.getLatitude(), location.getLongitude());
-        busStopPlotter.updateMarkerOfNearest(stopManager.findNearestTo(coordinates));
-        // TODO: complete the implementation of this method (Task 6)
+        Stop nearest = stopManager.findNearestTo(coordinates);
 
+        locationListener.onLocationChanged(nearest, coordinates);
+        busStopPlotter.updateMarkerOfNearest(nearest);
+        // TODO: complete the implementation of this method (Task 6)
     }
 
     /**
