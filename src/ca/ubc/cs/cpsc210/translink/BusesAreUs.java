@@ -158,10 +158,11 @@ public class BusesAreUs extends Activity implements LocationListener, StopSelect
     public void onStopSelected(Stop stop) {
         try {
             StopManager.getInstance().setSelected(stop);
+            new DownloadBusLocationDataTask().execute(stop);
+
         } catch (StopException e) {
             //
         }
-        // TODO: Complete the implementation of this method (Task 7)
     }
 
     /**
@@ -209,6 +210,7 @@ public class BusesAreUs extends Activity implements LocationListener, StopSelect
         i.putExtra(getString(R.string.stop_name_key), stop.getNumber());
         startActivity(i);
         overridePendingTransition(R.anim.slide_in_from_right, android.R.anim.fade_out);
+
     }
 
     /**

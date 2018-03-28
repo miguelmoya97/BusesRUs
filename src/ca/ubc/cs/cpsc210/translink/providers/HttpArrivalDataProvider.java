@@ -1,5 +1,6 @@
 package ca.ubc.cs.cpsc210.translink.providers;
 
+import android.util.Log;
 import ca.ubc.cs.cpsc210.translink.auth.TranslinkToken;
 import ca.ubc.cs.cpsc210.translink.model.Stop;
 
