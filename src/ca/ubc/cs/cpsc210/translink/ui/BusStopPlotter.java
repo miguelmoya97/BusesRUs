@@ -62,7 +62,6 @@ public class BusStopPlotter extends MapViewOverlay {
      */
     public void markStops(Location currentLocation) {
         Drawable stopIconDrawable = activity.getResources().getDrawable(R.drawable.stop_icon);
-
         updateVisibleArea();
         newStopClusterer();
         for (Stop s : StopManager.getInstance()) {
@@ -71,8 +70,7 @@ public class BusStopPlotter extends MapViewOverlay {
                 if (marker != null) {
                     setMarker(s, marker);
                 } else {
-                    marker = createMarker(s, Geometry.gpFromLatLon(s.getLocn()));
-                    marker.setIcon(stopIconDrawable);
+                    marker = makeMarker(s, Geometry.gpFromLatLon(s.getLocn()), stopIconDrawable);
                     setMarker(s, marker);
                 }
                 stopClusterer.add(marker);
@@ -128,25 +126,34 @@ public class BusStopPlotter extends MapViewOverlay {
         if (nearest != null) {
             nearestStnMarker = getMarker(nearest);
             if (nearestStnMarker == null) {
-                Marker marker = createMarker(nearest, Geometry.gpFromLatLon(nearest.getLocn()));
-                nearestStnMarker = marker;
-                marker.setIcon(closestStopIconDrawable);
-                setMarker(nearest, marker);
-                stopClusterer.add(marker);
+                setupNearestMarker(nearest, closestStopIconDrawable);
             } else {
                 nearestStnMarker.setIcon(closestStopIconDrawable);
             }
         }
-
     }
 
-    private Marker createMarker(Stop stop, GeoPoint gp) {
+    private void setupNearestMarker(Stop s, Drawable icon) {
+        GeoPoint gp = Geometry.gpFromLatLon(s.getLocn());
+        nearestStnMarker = makeMarker(s, gp, icon);
+        addMarker(nearestStnMarker, s);
+    }
+
+    //helper for setupNearestMarker and markStops
+    private Marker makeMarker(Stop stop, GeoPoint gp, Drawable icon) {
         Marker m = new Marker(mapView);
         m.setTitle(titleGenerator(stop));
         m.setPosition(gp);
         m.setRelatedObject(stop);
         m.setInfoWindow(stopInfoWindow);
+        m.setIcon(icon);
         return m;
+    }
+
+    //helper for setupNearestMarker
+    private void addMarker(Marker m, Stop s) {
+        setMarker(s, m);
+        stopClusterer.add(m);
     }
 
     /**

@@ -65,6 +65,7 @@ public class BusRouteDrawer extends MapViewOverlay {
 
     }
 
+    //helper for plotRoutes
     private Polyline setPolyline(List<GeoPoint> geoPoints, int zoomLevel, Route r) {
         Polyline p = new Polyline(context);
         p.setWidth(getLineWidth(zoomLevel));
@@ -73,11 +74,16 @@ public class BusRouteDrawer extends MapViewOverlay {
         return p;
     }
 
+    //helper for plotRoutes
     private void addGeoPointsWithinRectangle(List<GeoPoint> geoPoints, List<LatLon> coords) {
         for (int i = 0; i < coords.size() - 1; i++) {
-            if (Geometry.rectangleIntersectsLine(northWest, southEast, coords.get(i), coords.get(i + 1))) {
-                geoPoints.add(Geometry.gpFromLatLon(coords.get(i)));
-                geoPoints.add(Geometry.gpFromLatLon(coords.get(i + 1)));
+            if (Geometry.rectangleContainsPoint(northWest, southEast, coords.get(i))
+                    && Geometry.rectangleContainsPoint(northWest, southEast, coords.get(i + 1))) {
+
+                if (Geometry.rectangleIntersectsLine(northWest, southEast, coords.get(i), coords.get(i + 1))) {
+                    geoPoints.add(Geometry.gpFromLatLon(coords.get(i)));
+                    geoPoints.add(Geometry.gpFromLatLon(coords.get(i + 1)));
+                }
             }
         }
     }
