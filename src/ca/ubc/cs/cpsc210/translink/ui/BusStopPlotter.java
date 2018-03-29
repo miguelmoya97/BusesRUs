@@ -77,7 +77,6 @@ public class BusStopPlotter extends MapViewOverlay {
             }
         }
 
-        // TODO: complete the implementation of this method (Task 5)
     }
 
     //helper for markStops
@@ -133,7 +132,6 @@ public class BusStopPlotter extends MapViewOverlay {
 
 
 
-        // TODO: complete the implementation of this method (Task 6)
     }
 
     /**

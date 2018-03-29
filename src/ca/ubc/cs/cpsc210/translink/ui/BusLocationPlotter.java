@@ -52,7 +52,6 @@ public class BusLocationPlotter extends MapViewOverlay {
             }
             busLocationsOverlay.addItems(items);
         }
-        // TODO: complete the implementation of this method (Task 10)
     }
 
     /**

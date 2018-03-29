@@ -40,7 +40,6 @@ public class ArrivalsListFragment extends ListFragment {
         for (Arrival a : StopManager.getInstance().getSelected()) {
             arrivalList.add(a);
         }
-        // TODO: Complete the implementation of this method (Task 9)
         return arrivalList;
     }
 

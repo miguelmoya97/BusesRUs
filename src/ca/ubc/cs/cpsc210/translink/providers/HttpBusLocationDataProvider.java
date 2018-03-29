@@ -31,7 +31,6 @@ public class HttpBusLocationDataProvider extends AbstractHttpDataProvider {
         sb.append("http://api.translink.ca/rttiapi/v1/buses?apikey=" + TranslinkToken.TRANSLINK_API_KEY);
         sb.append("&stopNo=");
         sb.append(String.valueOf(stop.getNumber()));
-        // TODO: Complete the implementation of this method (Task 10)
         Log.d(sb.toString(), "getUrl: ");
         return new URL(sb.toString());
     }

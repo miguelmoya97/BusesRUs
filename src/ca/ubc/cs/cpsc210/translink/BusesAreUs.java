@@ -117,7 +117,6 @@ public class BusesAreUs extends Activity implements LocationListener, StopSelect
             myNearestStop = nearest;
             nearestStopLabel.setText(myNearestStop.getName());
         }
-        // TODO: Complete the implementation of this method (Task 6)
     }
 
     @Override

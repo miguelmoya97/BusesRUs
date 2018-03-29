@@ -63,7 +63,6 @@ public class BusRouteDrawer extends MapViewOverlay {
         }
 
 
-        //TODO: complete the implementation of this method (Task 7)
     }
 
     private Polyline setPolyline(List<GeoPoint> geoPoints, int zoomLevel, Route r) {

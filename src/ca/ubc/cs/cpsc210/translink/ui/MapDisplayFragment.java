@@ -302,7 +302,6 @@ public class MapDisplayFragment extends Fragment implements MapEventsReceiver, I
         Stop nearest = stopManager.findNearestTo(coordinates);
         locationListener.onLocationChanged(nearest, coordinates);
         busStopPlotter.updateMarkerOfNearest(nearest);
-        // TODO: complete the implementation of this method (Task 6)
     }
 
     /**

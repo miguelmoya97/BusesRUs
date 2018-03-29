@@ -31,7 +31,6 @@ public class HttpArrivalDataProvider extends AbstractHttpDataProvider {
         sb.append("http://api.translink.ca/rttiapi/v1/stops/");
         sb.append(stop.getNumber());
         sb.append("/estimates?apikey=" + TranslinkToken.TRANSLINK_API_KEY);
-        // TODO: Complete the implementation of this method (Task 8)
         return new URL(sb.toString());
     }
 
