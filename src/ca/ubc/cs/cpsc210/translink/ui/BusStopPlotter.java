@@ -67,16 +67,14 @@ public class BusStopPlotter extends MapViewOverlay {
         for (Stop s : StopManager.getInstance()) {
             if (Geometry.rectangleContainsPoint(northWest, southEast, s.getLocn())) {
                 Marker marker = new Marker(mapView);
-                GeoPoint markerPos = Geometry.gpFromLatLon(s.getLocn());
                 marker.setIcon(stopIconDrawable);
                 marker.setTitle(titleGenerator(s));
-                marker.setPosition(markerPos);
+                marker.setPosition(Geometry.gpFromLatLon(s.getLocn()));
                 marker.setRelatedObject(s);
                 marker.setInfoWindow(stopInfoWindow);
                 setMarker(s, marker);
                 stopClusterer.add(marker);
             }
-
         }
 
         // TODO: complete the implementation of this method (Task 5)
@@ -130,7 +128,6 @@ public class BusStopPlotter extends MapViewOverlay {
                     nearestStnMarker = m1;
                     nearestStnMarker.setIcon(closestStopIconDrawable);
                 }
-
             }
         }
 

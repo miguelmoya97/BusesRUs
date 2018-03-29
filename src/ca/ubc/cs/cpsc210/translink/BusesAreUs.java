@@ -111,6 +111,7 @@ public class BusesAreUs extends Activity implements LocationListener, StopSelect
     @Override
     public void onLocationChanged(Stop nearest, LatLon locn) {
         if (nearest == null) {
+            myNearestStop = null;
             nearestStopLabel.setText(R.string.out_of_range);
         } else {
             myNearestStop = nearest;
@@ -159,7 +160,6 @@ public class BusesAreUs extends Activity implements LocationListener, StopSelect
         try {
             StopManager.getInstance().setSelected(stop);
             new DownloadBusLocationDataTask().execute(stop);
-
         } catch (StopException e) {
             //
         }

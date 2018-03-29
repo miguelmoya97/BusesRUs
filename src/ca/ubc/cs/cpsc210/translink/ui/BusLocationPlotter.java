@@ -48,10 +48,9 @@ public class BusLocationPlotter extends MapViewOverlay {
             for (Bus b : selectedStop.getBuses()) {
                 GeoPoint gp = new GeoPoint(b.getLatLon().getLatitude(), b.getLatLon().getLongitude());
                 items.add(new OverlayItem(b.getRoute().getName(), b.getDestination(), gp));
-                busLocationsOverlay.addItems(items);
-                mapView.getOverlays().add(busLocationsOverlay);
 
             }
+            busLocationsOverlay.addItems(items);
         }
         // TODO: complete the implementation of this method (Task 10)
     }

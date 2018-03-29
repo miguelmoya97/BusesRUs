@@ -49,34 +49,38 @@ public class BusRouteDrawer extends MapViewOverlay {
         busRouteLegendOverlay.clear();
         busRouteOverlays.clear();
         updateVisibleArea();
-        Stop s = StopManager.getInstance().getSelected();
-        if (s != null) {
-            for (Route r : s.getRoutes()) {
-                int colour = busRouteLegendOverlay.add(r.getNumber());
-
+        Stop currentStop = StopManager.getInstance().getSelected();
+        if (currentStop != null) {
+            for (Route r : currentStop.getRoutes()) {
                 for (RoutePattern rp : r.getPatterns()) {
                     List<GeoPoint> geoPoints = new ArrayList<>();
                     List<LatLon> coords = rp.getPath();
-
-                    for (int i = 0; i < coords.size() - 1; i++) {
-                        if (Geometry.rectangleIntersectsLine(northWest, southEast, coords.get(i), coords.get(i + 1))) {
-                            geoPoints.add(Geometry.gpFromLatLon(coords.get(i)));
-                        }
-                            Polyline p = new Polyline(mapView.getContext());
-                            p.setWidth(getLineWidth(zoomLevel));
-                            p.setColor(colour);
-                            p.setPoints(geoPoints);
-                            busRouteOverlays.add(p);
-
-                    }
+                    addGeoPointsWithinRectangle(geoPoints, coords);
+                    Polyline p = setPolyline(geoPoints, zoomLevel, r);
+                    busRouteOverlays.add(p);
                 }
             }
-
         }
 
 
-
         //TODO: complete the implementation of this method (Task 7)
+    }
+
+    private Polyline setPolyline(List<GeoPoint> geoPoints, int zoomLevel, Route r) {
+        Polyline p = new Polyline(context);
+        p.setWidth(getLineWidth(zoomLevel));
+        p.setColor(busRouteLegendOverlay.add(r.getNumber()));
+        p.setPoints(geoPoints);
+        return p;
+    }
+
+    private void addGeoPointsWithinRectangle(List<GeoPoint> geoPoints, List<LatLon> coords) {
+        for (int i = 0; i < coords.size() - 1; i++) {
+            if (Geometry.rectangleIntersectsLine(northWest, southEast, coords.get(i), coords.get(i + 1))) {
+                geoPoints.add(Geometry.gpFromLatLon(coords.get(i)));
+                geoPoints.add(Geometry.gpFromLatLon(coords.get(i + 1)));
+            }
+        }
     }
 
     public List<Polyline> getBusRouteOverlays() {
