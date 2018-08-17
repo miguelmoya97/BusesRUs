@@ -21,7 +21,6 @@ public class StopManager implements Iterable<Stop> {
     // Do not change this field or its type, as the iterator method depends on it
     private Map<Integer, Stop> stopMap;
     private Stop selectedStop;
-
     /**
      * Constructs stop manager with empty collection of stops and null as the selected stop
      */
