@@ -15,7 +15,7 @@ import java.util.Map;
  * is globally accessible throughout application.
  */
 public class StopManager implements Iterable<Stop> {
-    public static final int RADIUS = 10000;
+    public static final int RADIUS = 1000;
     private static StopManager instance;
     // Use this field to hold all of the stops.
     // Do not change this field or its type, as the iterator method depends on it
